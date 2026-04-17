@@ -25,6 +25,7 @@ const ADMIN_TOKEN = process.env.API_KEY;
 function formatOrderDate(timestamp) {
   // 請實作此函式
   // 提示：dayjs.unix(timestamp).format('YYYY/MM/DD HH:mm')
+  return dayjs.unix(timestamp).format('YYYY/MM/DD HH:mm');
 }
 
 /**
