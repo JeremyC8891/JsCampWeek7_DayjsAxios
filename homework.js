@@ -93,6 +93,27 @@ function getThisWeekOrders(orders) {
  */
 function validateOrderUser(data) {
   // 請實作此函式
+  const errors = [];  
+  if (!data.name || data.name.trim() === "") {
+    errors.push('姓名不可為空');
+  }
+  if (!/^09\d{8}$/.test(data.tel)) {
+    errors.push('電話格式不正確');
+  }
+  if (!data.email || !data.email.includes('@')) {
+    errors.push('Email 無 @ 符號');
+  }
+  if (!data.address || data.address.trim() === "") {
+    errors.push('地址不可為空');
+  }
+  if (!['ATM', 'Credit Card', 'Apple Pay'].includes(data.payment)) {
+    errors.push('請使用有配合的付款方式');
+  }
+  return {
+    isValid: errors.length === 0,
+    errors: errors
+  };
+  
 }
 
 /**
@@ -107,6 +128,30 @@ function validateOrderUser(data) {
  */
 function validateCartQuantity(quantity) {
   // 請實作此函式
+  if (!Number.isInteger(quantity)) {
+    return {
+      isValid: false,
+      error: '數量必須是正整數'
+    };
+  }
+ 
+  if (quantity < 1) {
+    return {
+      isValid: false,
+      error: '數量不可小於 1'
+    };
+  }
+
+  if (quantity > 99) {
+    return {
+      isValid: false,
+      error: '數量不可大於 99'
+    };
+  }
+
+  return {
+    isValid: true
+  };
 }
 
 // ========================================
