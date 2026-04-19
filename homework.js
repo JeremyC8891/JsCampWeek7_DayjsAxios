@@ -39,6 +39,10 @@ function getDaysAgo(timestamp) {
   // 1. 用 dayjs() 取得今天
   // 2. 用 dayjs.unix(timestamp) 取得訂單日期
   // 3. 用 .diff() 計算天數差異
+  const today = dayjs();
+  const orderDate = dayjs.unix(timestamp);
+  const diffDays = today.diff(orderDate, 'day');  
+  return diffDays === 0 ? '今天' : `${diffDays} 天前`;
 }
 
 /**
@@ -48,6 +52,10 @@ function getDaysAgo(timestamp) {
  */
 function isOrderOverdue(timestamp) {
   // 請實作此函式
+  const today = dayjs();
+  const orderDate = dayjs.unix(timestamp);
+  const diffDays = today.diff(orderDate, 'day');  
+  return diffDays > 7;
 }
 
 /**
@@ -61,6 +69,10 @@ function getThisWeekOrders(orders) {
   // 1. 用 dayjs().startOf('week') 取得本週開始
   // 2. 用 dayjs().endOf('week') 取得本週結束
   // 3. 用 .isBefore() 和 .isAfter() 判斷
+  const today = dayjs();
+  const startOfWeek = today.startOf('week');
+  const endOfWeek = today.endOf('week');
+  return orders.filter(order => dayjs.unix(order.createdAt).isBefore(endOfWeek) && dayjs.unix(order.createdAt).isAfter(startOfWeek));
 }
 
 // ========================================
