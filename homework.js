@@ -255,6 +255,10 @@ const OrderService = {
    */
   async fetchOrders() {
     // 請實作此函式
+    const response = await axios.get(`${this.baseURL}/api/livejs/v1/admin/${this.apiPath}/orders`, { 
+      headers: {authorization: this.token} 
+    });
+    return response.data.orders;  
   },
 
   /**
@@ -264,8 +268,15 @@ const OrderService = {
    */
   formatOrders(orders) {
     // 請實作此函式
+    const formattedDate = orders.map(order => {
+      return {
+        ...order,
+        formattedDate: dayjs.unix(order.createdAt).format('YYYY/MM/DD')
+      };
+    });
+    return formattedDate;
   },
-
+    
   /**
    * 篩選未付款訂單
    * @param {Array} orders - 訂單陣列
@@ -273,6 +284,7 @@ const OrderService = {
    */
   filterUnpaidOrders(orders) {
     // 請實作此函式
+    return orders.filter(order => order.paid === false);  
   },
 
   /**
