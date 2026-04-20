@@ -218,16 +218,23 @@ async function addToCartWithAxios(productId, quantity) {
 async function getOrdersWithAxios() {
   // 請實作此函式
   // 提示：axios.get(url, { headers: { authorization: token } })
+  const response = await axios.get(`${BASE_URL}/api/livejs/v1/admin/${API_PATH}/orders`, { 
+    headers: {authorization: ADMIN_TOKEN} 
+  });
+  return response.data.orders;
 }
 
 /*
 比較題：請說明 fetch 和 axios 的主要差異
 
-1. ____________________________________
+1. axios 是一個第三方套件，需要另外安裝，而 fetch 是瀏覽器內建的原生函式 。
+____________________________________
 
-2. ____________________________________
+2. axios 會自動解析 JSON 回應，而 fetch 需要手動呼叫 .json() 方法來解析回應內容。 
+____________________________________
 
-3. ____________________________________
+3. axios 只要狀態碼不在 2xx 範圍內，它就會主動拋出錯誤，而 fetch 需要主動檢查 response.ok 或狀態碼來判斷是否成功。
+____________________________________
 */
 
 // ========================================
